@@ -3,6 +3,7 @@ package me.SuperRonanCraft.BetterRTP.references.helpers;
 import me.SuperRonanCraft.BetterRTP.BetterRTP;
 import me.SuperRonanCraft.BetterRTP.references.PermissionNode;
 import me.SuperRonanCraft.BetterRTP.references.messages.MessagesCore;
+import org.bukkit.Bukkit;
 import org.bukkit.block.Biome;
 import org.bukkit.command.CommandSender;
 
@@ -35,9 +36,17 @@ public class HelperRTP_Info {
             for (Biome b : Biome.values())
                 if (b.name().toUpperCase().replaceAll("minecraft:", "").startsWith(args[args.length - 1].toUpperCase()))
                     list.add(b.name().replaceAll("minecraft:", ""));
+            //PixelmonBiome
+            if (BetterRTP.getPixelmonBiome() != null){
+                for (Object object : BetterRTP.getPixelmonBiome()) {
+                    String name = ((Enum) object).name();
+                    if (!list.contains(name)) {
+                        list.add(name);
+                    }
+                }
+            }
         } catch (NoSuchMethodError e) {
             //Not in 1.14.X
         }
     }
-
 }

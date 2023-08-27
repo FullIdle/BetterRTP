@@ -28,9 +28,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
-import java.util.logging.Level;
 
 public class BetterRTP extends JavaPlugin {
+    @Getter private static Object[] pixelmonBiome = null;
     @Getter private final Permissions perms = new Permissions();
     @Getter private final DepEconomy eco = new DepEconomy();
     @Getter private final Commands cmd = new Commands(this);
@@ -64,6 +64,7 @@ public class BetterRTP extends JavaPlugin {
         } catch (NoClassDefFoundError e) {
             //No placeholder api :(
         }
+
     }
 
     @Override
@@ -115,9 +116,19 @@ public class BetterRTP extends JavaPlugin {
         eco.load();
         perms.register();
         queue.load();
+        pixelmonLoad();
     }
 
     public static void debug(String str) {
         getInstance().getLogger().info(str);
+    }
+
+    public static void pixelmonLoad(){
+        try {
+            Class<?> cls = Class.forName("com.pixelmonmod.pixelmon.worldGeneration.dimension.EnumBiome");
+            pixelmonBiome = cls.getEnumConstants();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
